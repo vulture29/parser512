@@ -1786,7 +1786,7 @@ bool Parser::statement(void) {
         if ( (current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")  ) {
           if( get_next_word() ) {
             if(condition_expression()) {
-              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")") {
+              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")")) {
                 if( get_next_word() ) {
                   if(block_statements()) {
                     return ( true );
@@ -1806,7 +1806,7 @@ bool Parser::statement(void) {
         if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")) {
           if( get_next_word() ) {
             if(condition_expression()) {
-              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")") {
+              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")")) {
                 if( get_next_word() ) {
                   if(block_statements()) {
                     return ( true );
