@@ -1769,7 +1769,162 @@ bool Parser::statement(void) {
 
 
   // Add Code here
-
+  if( check_first_plus_set( current_word, FirstPlus::statement_p0 ) ) {
+    // ID <statement_0>
+    if ( (current_word.get_token_type() == TokenType::IDENTIFIER)  ) {
+      if( get_next_word() ) {
+        if ( statement_0() ) {
+          return( true );
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p1 )) {
+    // if left_parenthesis <condition_expression> right_parenthesis <block_statements>
+    if ( (current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "if")  ) {
+      if( get_next_word() ) {
+        if ( (current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")  ) {
+          if( get_next_word() ) {
+            if(condition_expression()) {
+              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")") {
+                if( get_next_word() ) {
+                  if(block_statements()) {
+                    return ( true );
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p2 )) {
+    // while left_parenthesis <condition_expression> right_parenthesis <block_statements>
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "while")) {
+      if( get_next_word() ) {
+        if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")) {
+          if( get_next_word() ) {
+            if(condition_expression()) {
+              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")") {
+                if( get_next_word() ) {
+                  if(block_statements()) {
+                    return ( true );
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p3 )) {
+    // return <statement_2>
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "return")) {
+      if( get_next_word() ) {
+        if(statement_2()) {
+          return ( true );
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p4 )) {
+    // break semicolon
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "break")) {
+      if( get_next_word() ) {
+        if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ";")) {
+          if( get_next_word() ) {
+            return ( true );
+          }
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p5 )) {
+    // continue semicolon
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "continue")) {
+      if( get_next_word() ) {
+        if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ";")) {
+          if( get_next_word() ) {
+            return ( true );
+          }
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p6 )) {
+    // read left_parenthesis ID right_parenthesis semicolon
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "read")) {
+      if( get_next_word() ) {
+        if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")) {
+          if( get_next_word() ) {
+            if(current_word.get_token_type() == TokenType::IDENTIFIER) {
+              if( get_next_word() ) {
+                if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")")) {
+                  if( get_next_word() ) {
+                    if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ";")) {
+                      if( get_next_word() ) {
+                        return ( true );
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p7 )) {
+    // write left_parenthesis <expression> right_parenthesis semicolon
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "write")) {
+      if( get_next_word() ) {
+        if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")) {
+          if( get_next_word() ) {
+            if(expression()) {
+              if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")")) {
+                if( get_next_word() ) {
+                  if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ";")) {
+                    if( get_next_word() ) {
+                      return ( true );
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  else if(check_first_plus_set( current_word, FirstPlus::statement_p8 )) {
+    // print left_parenthesis STRING right_parenthesis semicolon
+    if((current_word.get_token_type() == TokenType::RESERVED_WORD) && (current_word.get_token_name() == "print")) {
+      if( get_next_word() ) {
+        if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == "(")) {
+          if( get_next_word() ) {
+            if(current_word.get_token_type() == TokenType::STRING) {
+              if( get_next_word() ) {
+                if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ")")) {
+                  if( get_next_word() ) {
+                    if((current_word.get_token_type() == TokenType::SYMBOL) && (current_word.get_token_name() == ";")) {
+                      if( get_next_word() ) {
+                        return ( true );
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  fail_state = true;
+  return(false);
 }
 
 
